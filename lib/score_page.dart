@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:blitz_score/model/player.dart';
 import 'package:flutter/services.dart';
 
-import 'add_player_page.dart';
+import 'player_config_page.dart';
 
 class ScorePage extends StatefulWidget {
   const ScorePage({Key? key}) : super(key: key);
@@ -33,22 +33,30 @@ class ScorePageState extends State<ScorePage> {
     super.dispose();
   }
 
+  _handleLongPress(int index) async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                PlayerConfigPage(isEditing: true, index: index)));
+  }
+
   Widget _addPlayerButton() {
-    return SizedBox(
-      width: 225,
-      child: Center(
-          child: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const AddPlayerPage()));
-        },
-        icon: const Icon(Icons.add_rounded),
-        label: const Text(
-          'Add new Player',
-        ),
-        backgroundColor: Colors.blueGrey,
-        foregroundColor: Colors.white,
-      )),
+    return FloatingActionButton(
+      onPressed: () async {
+        await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PlayerConfigPage(
+                      isEditing: false,
+                      index: playerList.length,
+                    )));
+        setState(() {});
+      },
+      child: const Icon(Icons.add_rounded),
+      tooltip: 'Add new player',
+      backgroundColor: Colors.blueGrey,
+      foregroundColor: Colors.white,
     );
   }
 
@@ -64,6 +72,7 @@ class ScorePageState extends State<ScorePage> {
                 ? Text('Increase "' + name + '" score:')
                 : Text('Decrease "' + name + '" score:'),
             content: TextField(
+              autofocus: true,
               controller: customController,
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly
@@ -129,16 +138,22 @@ class ScorePageState extends State<ScorePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      scrollDirection: Axis.horizontal,
-      children: [
-        ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemCount: playerList.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Expanded(
+    return Scaffold(
+      body: ListView(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        children: [
+          ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: playerList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Expanded(
+                  child: InkWell(
+                onLongPress: () {
+                  _handleLongPress(index);
+                  setState(() {});
+                },
                 child: Container(
                     width: 225,
                     color: playerList[index].card.color,
@@ -159,6 +174,7 @@ class ScorePageState extends State<ScorePage> {
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     color: Colors.white,
+                                    fontSize: 40,
                                     decoration: TextDecoration.none,
                                   ),
                                 ),
@@ -175,11 +191,14 @@ class ScorePageState extends State<ScorePage> {
                               ],
                             ),
                           ],
-                        ))));
-          },
-        ),
-        _addPlayerButton(),
-      ],
+                        ))),
+              ));
+            },
+          ),
+        ],
+      ),
+      floatingActionButton: _addPlayerButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
     );
   }
 }

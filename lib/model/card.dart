@@ -13,47 +13,45 @@ const double iconSize = 250;
 const Color iconColor = Colors.black12;
 
 MyCard greenPail = MyCard(
-    id: 0,
+    id: 5,
     color: Colors.lightGreen.shade600,
     figure:
         const Icon(MyFlutterApp.pail, size: iconSize - 50, color: iconColor));
 MyCard yellowCarriage = MyCard(
-    id: 1,
+    id: 7,
     color: Colors.yellow.shade600,
     figure:
         const Icon(MyFlutterApp.carriage, size: iconSize, color: iconColor));
 MyCard redPlow = MyCard(
-    id: 2,
+    id: 6,
     color: Colors.red.shade500,
     figure: const Icon(MyFlutterApp.plow, size: iconSize, color: iconColor));
 MyCard bluePump = MyCard(
-    id: 3,
+    id: 4,
     color: Colors.lightBlue.shade600,
     figure:
         const Icon(MyFlutterApp.pump, size: iconSize - 50, color: iconColor));
 MyCard yellowPail = MyCard(
-    id: 4,
+    id: 1,
     color: Colors.yellow.shade600,
     figure:
         const Icon(MyFlutterApp.pail, size: iconSize - 50, color: iconColor));
 MyCard redCarriage = MyCard(
-    id: 5,
+    id: 3,
     color: Colors.red.shade500,
     figure:
         const Icon(MyFlutterApp.carriage, size: iconSize, color: iconColor));
 MyCard bluePlow = MyCard(
-    id: 6,
+    id: 2,
     color: Colors.lightBlue.shade600,
     figure: const Icon(MyFlutterApp.plow, size: iconSize, color: iconColor));
 MyCard greenPump = MyCard(
-    id: 7,
+    id: 0,
     color: Colors.lightGreen.shade600,
     figure:
         const Icon(MyFlutterApp.pump, size: iconSize - 50, color: iconColor));
 MyCard genericCard = MyCard(
-    id: 8,
-    color: Colors.white,
-    figure: const Icon(Icons.card_giftcard, color: iconColor));
+    id: 8, color: Colors.black26, figure: const Icon(null, color: iconColor));
 
 List<MyCard> cardList = [
   greenPump,
