@@ -50,6 +50,10 @@ MyCard greenPump = MyCard(
     color: Colors.lightGreen.shade600,
     figure:
         const Icon(MyFlutterApp.pump, size: iconSize - 50, color: iconColor));
+MyCard genericCard = MyCard(
+    id: 8,
+    color: Colors.white,
+    figure: const Icon(Icons.card_giftcard, color: iconColor));
 
 List<MyCard> cardList = [
   greenPump,
@@ -60,4 +64,5 @@ List<MyCard> cardList = [
   greenPail,
   redPlow,
   yellowCarriage,
+  genericCard
 ];

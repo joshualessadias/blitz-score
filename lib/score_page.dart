@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:blitz_score/models/player.dart';
+import 'package:blitz_score/model/player.dart';
 import 'package:flutter/services.dart';
+
+import 'add_player_page.dart';
 
 class ScorePage extends StatefulWidget {
   const ScorePage({Key? key}) : super(key: key);
@@ -10,12 +12,36 @@ class ScorePage extends StatefulWidget {
 }
 
 class ScorePageState extends State<ScorePage> {
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+  }
+
+  @override
+  dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
+    super.dispose();
+  }
+
   Widget _addPlayerButton() {
-    return Container(
+    return SizedBox(
       width: 225,
       child: Center(
           child: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AddPlayerPage()));
+        },
         icon: const Icon(Icons.add_rounded),
         label: const Text(
           'Add new Player',
@@ -26,7 +52,8 @@ class ScorePageState extends State<ScorePage> {
     );
   }
 
-  Future<int?> showInputDialog(BuildContext context, bool sum, String name) {
+  Future<int?> showScoreInputDialog(
+      BuildContext context, bool sum, String name) {
     TextEditingController customController = TextEditingController();
     return showDialog<int>(
         context: context,
@@ -46,7 +73,10 @@ class ScorePageState extends State<ScorePage> {
             actions: <Widget>[
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pop(int.parse(customController.text));
+                  customController.text != ''
+                      ? Navigator.of(context)
+                          .pop(int.parse(customController.text))
+                      : Navigator.of(context).pop(int.parse('0'));
                 },
                 child: const Text('Submit'),
               )
@@ -61,7 +91,7 @@ class ScorePageState extends State<ScorePage> {
       children: [
         OutlinedButton(
             onPressed: () {
-              showInputDialog(context, true, playerList[index].name)
+              showScoreInputDialog(context, true, playerList[index].name)
                   .then((value) => setState(() {
                         playerList[index].points += value!;
                       }));
@@ -78,7 +108,7 @@ class ScorePageState extends State<ScorePage> {
             )),
         OutlinedButton(
             onPressed: () {
-              showInputDialog(context, false, playerList[index].name)
+              showScoreInputDialog(context, false, playerList[index].name)
                   .then((value) => setState(() {
                         playerList[index].points -= value!;
                       }));
