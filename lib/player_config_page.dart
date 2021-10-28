@@ -28,6 +28,10 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
     ]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
+    selectedCard =
+        widget.isEditing ? playerList[widget.index].card : selectedCard;
+    myController.text =
+        widget.isEditing ? playerList[widget.index].name : myController.text;
   }
 
   @override

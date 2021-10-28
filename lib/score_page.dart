@@ -12,6 +12,9 @@ class ScorePage extends StatefulWidget {
 }
 
 class ScorePageState extends State<ScorePage> {
+  double dbMaxWidgets = 0;
+  int maxWidgets = 0;
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +42,7 @@ class ScorePageState extends State<ScorePage> {
         MaterialPageRoute(
             builder: (context) =>
                 PlayerConfigPage(isEditing: true, index: index)));
+    setState(() {});
   }
 
   Widget _addPlayerButton() {
@@ -136,67 +140,76 @@ class ScorePageState extends State<ScorePage> {
     );
   }
 
+  _listView() {
+    return ListView(
+      shrinkWrap: true,
+      scrollDirection: Axis.horizontal,
+      children: [
+        ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: playerList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return InkWell(
+              onLongPress: () {
+                _handleLongPress(index);
+              },
+              child: Container(
+                  width: playerList.length <= maxWidgets
+                      ? MediaQuery.of(context).size.width / playerList.length
+                      : 225,
+                  color: playerList[index].card.color,
+                  child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 24, 8, 24),
+                      child: Stack(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.fromLTRB(0, 65, 0, 0),
+                            width: playerList.length <= maxWidgets
+                                ? MediaQuery.of(context).size.width /
+                                    playerList.length
+                                : 225,
+                            child: playerList[index].card.figure,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                playerList[index].name,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 40,
+                                  decoration: TextDecoration.none,
+                                ),
+                              ),
+                              Text(
+                                playerList[index].points.toString(),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  decoration: TextDecoration.none,
+                                  fontSize: 100,
+                                ),
+                              ),
+                              _scoringButtons(index),
+                            ],
+                          ),
+                        ],
+                      ))),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    dbMaxWidgets = MediaQuery.of(context).size.width / 225;
+    maxWidgets = dbMaxWidgets.floor();
     return Scaffold(
-      body: ListView(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: playerList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Expanded(
-                  child: InkWell(
-                onLongPress: () {
-                  _handleLongPress(index);
-                  setState(() {});
-                },
-                child: Container(
-                    width: 225,
-                    color: playerList[index].card.color,
-                    child: Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 24, 8, 24),
-                        child: Stack(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(0, 65, 0, 0),
-                              width: 225,
-                              child: playerList[index].card.figure,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  playerList[index].name,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 40,
-                                    decoration: TextDecoration.none,
-                                  ),
-                                ),
-                                Text(
-                                  playerList[index].points.toString(),
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    decoration: TextDecoration.none,
-                                    fontSize: 100,
-                                  ),
-                                ),
-                                _scoringButtons(index),
-                              ],
-                            ),
-                          ],
-                        ))),
-              ));
-            },
-          ),
-        ],
-      ),
+      body: _listView(),
       floatingActionButton: _addPlayerButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
     );
