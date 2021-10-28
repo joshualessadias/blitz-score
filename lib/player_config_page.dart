@@ -107,7 +107,7 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
                           child: Icon(
                             cardList[0].figure.icon,
                             size: 200,
-                            color: Colors.black54,
+                            color: Colors.black38,
                           ),
                         ),
                       ),
@@ -135,7 +135,7 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
                           child: Icon(
                             cardList[1].figure.icon,
                             size: 200,
-                            color: Colors.black54,
+                            color: Colors.black38,
                           ),
                         ),
                       ),
@@ -167,7 +167,7 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
                           child: Icon(
                             cardList[2].figure.icon,
                             size: 200,
-                            color: Colors.black54,
+                            color: Colors.black38,
                           ),
                         ),
                       ),
@@ -195,7 +195,7 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
                           child: Icon(
                             cardList[3].figure.icon,
                             size: 200,
-                            color: Colors.black54,
+                            color: Colors.black38,
                           ),
                         ),
                       ),
@@ -227,7 +227,7 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
                           child: Icon(
                             cardList[4].figure.icon,
                             size: 200,
-                            color: Colors.black54,
+                            color: Colors.black38,
                           ),
                         ),
                       ),
@@ -255,7 +255,7 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
                           child: Icon(
                             cardList[5].figure.icon,
                             size: 200,
-                            color: Colors.black54,
+                            color: Colors.black38,
                           ),
                         ),
                       ),
@@ -287,7 +287,7 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
                           child: Icon(
                             cardList[6].figure.icon,
                             size: 200,
-                            color: Colors.black54,
+                            color: Colors.black38,
                           ),
                         ),
                       ),
@@ -315,7 +315,7 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
                           child: Icon(
                             cardList[7].figure.icon,
                             size: 200,
-                            color: Colors.black54,
+                            color: Colors.black38,
                           ),
                         ),
                       ),
