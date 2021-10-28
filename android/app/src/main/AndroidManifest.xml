@@ -2,7 +2,7 @@
     package="com.example.blitz_score">
    <application
         android:label="blitz_score"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

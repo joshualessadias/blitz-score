@@ -13,7 +13,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Blitz Score Counter',
       theme: ThemeData(
           brightness: Brightness.dark,
           elevatedButtonTheme: ElevatedButtonThemeData(
