@@ -1,5 +1,6 @@
 import 'package:blitz_score/model/card.dart';
 import 'package:blitz_score/model/player.dart';
+import 'package:blitz_score/service/player_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -35,7 +36,7 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
   }
 
   @override
-  dispose() {
+  void dispose() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -45,7 +46,7 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
     super.dispose();
   }
 
-  _handleSubmitted() {
+  void _handleSubmitted() {
     FocusScope.of(context).unfocus();
     widget.isEditing
         ? updatePlayer(widget.index, myController.text, selectedCard)
@@ -53,10 +54,70 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
     Navigator.pop(context);
   }
 
-  _handleDeleted() {
+  void _handleDeleted() {
     FocusScope.of(context).unfocus();
     deletePlayer(widget.index);
     Navigator.pop(context);
+  }
+
+  Widget _constructRow(int firstIndex, int secondIndex) {
+    return Row(
+      children: [
+        Expanded(
+          child: AspectRatio(
+            aspectRatio: 1.0,
+            child: InkWell(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                selectedCard = cardList[firstIndex];
+                setState(() {});
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: selectedCard == cardList[firstIndex]
+                        ? cardList[firstIndex].color
+                        : cardList[firstIndex].color.withOpacity(0.3)),
+                width: double.infinity,
+                child: Icon(
+                  cardList[firstIndex].figure.icon,
+                  size: 200,
+                  color: Colors.black38,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 8,
+        ),
+        Expanded(
+          child: AspectRatio(
+            aspectRatio: 1.0,
+            child: InkWell(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                selectedCard = cardList[secondIndex];
+                setState(() {});
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: selectedCard == cardList[secondIndex]
+                        ? cardList[secondIndex].color
+                        : cardList[secondIndex].color.withOpacity(0.3)),
+                width: double.infinity,
+                child: Icon(
+                  cardList[secondIndex].figure.icon,
+                  size: 200,
+                  color: Colors.black38,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -86,243 +147,19 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
               const SizedBox(
                 height: 16,
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 1.0,
-                      child: InkWell(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          selectedCard = cardList[0];
-                          setState(() {});
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: selectedCard == cardList[0]
-                                  ? cardList[0].color
-                                  : cardList[0].color.withOpacity(0.3)),
-                          width: double.infinity,
-                          child: Icon(
-                            cardList[0].figure.icon,
-                            size: 200,
-                            color: Colors.black38,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 1.0,
-                      child: InkWell(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          selectedCard = cardList[1];
-                          setState(() {});
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: selectedCard == cardList[1]
-                                  ? cardList[1].color
-                                  : cardList[1].color.withOpacity(0.3)),
-                          width: double.infinity,
-                          child: Icon(
-                            cardList[1].figure.icon,
-                            size: 200,
-                            color: Colors.black38,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              _constructRow(0, 1),
               const SizedBox(
                 height: 8,
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 1.0,
-                      child: InkWell(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          selectedCard = cardList[2];
-                          setState(() {});
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: selectedCard == cardList[2]
-                                  ? cardList[2].color
-                                  : cardList[2].color.withOpacity(0.3)),
-                          width: double.infinity,
-                          child: Icon(
-                            cardList[2].figure.icon,
-                            size: 200,
-                            color: Colors.black38,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 1.0,
-                      child: InkWell(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          selectedCard = cardList[3];
-                          setState(() {});
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: selectedCard == cardList[3]
-                                  ? cardList[3].color
-                                  : cardList[3].color.withOpacity(0.3)),
-                          width: double.infinity,
-                          child: Icon(
-                            cardList[3].figure.icon,
-                            size: 200,
-                            color: Colors.black38,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              _constructRow(2, 3),
               const SizedBox(
                 height: 8,
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 1.0,
-                      child: InkWell(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          selectedCard = cardList[4];
-                          setState(() {});
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: selectedCard == cardList[4]
-                                  ? cardList[4].color
-                                  : cardList[4].color.withOpacity(0.3)),
-                          width: double.infinity,
-                          child: Icon(
-                            cardList[4].figure.icon,
-                            size: 200,
-                            color: Colors.black38,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 1.0,
-                      child: InkWell(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          selectedCard = cardList[5];
-                          setState(() {});
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: selectedCard == cardList[5]
-                                  ? cardList[5].color
-                                  : cardList[5].color.withOpacity(0.3)),
-                          width: double.infinity,
-                          child: Icon(
-                            cardList[5].figure.icon,
-                            size: 200,
-                            color: Colors.black38,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              _constructRow(4, 5),
               const SizedBox(
                 height: 8,
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 1.0,
-                      child: InkWell(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          selectedCard = cardList[6];
-                          setState(() {});
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: selectedCard == cardList[6]
-                                  ? cardList[6].color
-                                  : cardList[6].color.withOpacity(0.3)),
-                          width: double.infinity,
-                          child: Icon(
-                            cardList[6].figure.icon,
-                            size: 200,
-                            color: Colors.black38,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(
-                    child: AspectRatio(
-                      aspectRatio: 1.0,
-                      child: InkWell(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          selectedCard = cardList[7];
-                          setState(() {});
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: selectedCard == cardList[7]
-                                  ? cardList[7].color
-                                  : cardList[7].color.withOpacity(0.3)),
-                          width: double.infinity,
-                          child: Icon(
-                            cardList[7].figure.icon,
-                            size: 200,
-                            color: Colors.black38,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              _constructRow(6, 7),
               const SizedBox(
                 height: 16,
               ),

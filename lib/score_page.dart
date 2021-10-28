@@ -1,3 +1,4 @@
+import 'package:blitz_score/service/player_service.dart';
 import 'package:flutter/material.dart';
 import 'package:blitz_score/model/player.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +37,7 @@ class ScorePageState extends State<ScorePage> {
     super.dispose();
   }
 
-  _handleLongPress(int index) async {
+  void _handleLongPress(int index) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
@@ -106,7 +107,7 @@ class ScorePageState extends State<ScorePage> {
             onPressed: () {
               showScoreInputDialog(context, true, playerList[index].name)
                   .then((value) => setState(() {
-                        playerList[index].points += value!;
+                        sumPoints(index, value!);
                       }));
             },
             style: OutlinedButton.styleFrom(
@@ -123,7 +124,7 @@ class ScorePageState extends State<ScorePage> {
             onPressed: () {
               showScoreInputDialog(context, false, playerList[index].name)
                   .then((value) => setState(() {
-                        playerList[index].points -= value!;
+                        subtractPoints(index, value!);
                       }));
             },
             style: OutlinedButton.styleFrom(
@@ -140,7 +141,7 @@ class ScorePageState extends State<ScorePage> {
     );
   }
 
-  _listView() {
+  Widget _listView() {
     return ListView(
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
