@@ -1,6 +1,5 @@
 import 'package:blitz_score/model/card.dart';
 import 'package:blitz_score/model/player.dart';
-import 'package:blitz_score/service/player_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
