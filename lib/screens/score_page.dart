@@ -1,6 +1,6 @@
-import 'package:blitz_score/service/player_service.dart';
+import 'package:blitz_score/utilities/player_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:blitz_score/model/player.dart';
+import 'package:blitz_score/models/player.dart';
 import 'package:flutter/services.dart';
 
 import 'player_config_page.dart';
@@ -15,6 +15,8 @@ class ScorePage extends StatefulWidget {
 class ScorePageState extends State<ScorePage> {
   double dbMaxWidgets = 0;
   int maxWidgets = 0;
+
+  var playerUtils = PlayerUtils();
 
   @override
   void initState() {
@@ -107,7 +109,7 @@ class ScorePageState extends State<ScorePage> {
             onPressed: () {
               showScoreInputDialog(context, true, playerList[index].name)
                   .then((value) => setState(() {
-                        sumPoints(index, value!);
+                        playerUtils.sumPoints(index, value!);
                       }));
             },
             style: OutlinedButton.styleFrom(
@@ -124,7 +126,7 @@ class ScorePageState extends State<ScorePage> {
             onPressed: () {
               showScoreInputDialog(context, false, playerList[index].name)
                   .then((value) => setState(() {
-                        subtractPoints(index, value!);
+                        playerUtils.subtractPoints(index, value!);
                       }));
             },
             style: OutlinedButton.styleFrom(

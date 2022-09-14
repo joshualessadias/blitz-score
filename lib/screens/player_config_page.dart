@@ -1,6 +1,6 @@
-import 'package:blitz_score/model/card.dart';
-import 'package:blitz_score/model/player.dart';
-import 'package:blitz_score/service/player_service.dart';
+import 'package:blitz_score/models/card.dart';
+import 'package:blitz_score/models/player.dart';
+import 'package:blitz_score/utilities/player_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -19,6 +19,8 @@ class PlayerConfigPage extends StatefulWidget {
 class _PlayerConfigPageState extends State<PlayerConfigPage> {
   MyCard selectedCard = cardList[8];
   TextEditingController myController = TextEditingController();
+
+  var playerUtils = PlayerUtils();
 
   @override
   void initState() {
@@ -49,14 +51,14 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
   void _handleSubmitted() {
     FocusScope.of(context).unfocus();
     widget.isEditing
-        ? updatePlayer(widget.index, myController.text, selectedCard)
-        : createPlayer(widget.index, myController.text, selectedCard);
+        ? playerUtils.updatePlayer(widget.index, myController.text, selectedCard)
+        : playerUtils.createPlayer(widget.index, myController.text, selectedCard);
     Navigator.pop(context);
   }
 
   void _handleDeleted() {
     FocusScope.of(context).unfocus();
-    deletePlayer(widget.index);
+    playerUtils.deletePlayer(widget.index);
     Navigator.pop(context);
   }
 

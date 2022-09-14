@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:blitz_score/model/app_icons.dart';
+import 'package:blitz_score/models/app_icons.dart';
 
 class MyCard {
   final int id;

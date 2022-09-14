@@ -1,4 +1,4 @@
-import 'package:blitz_score/model/card.dart';
+import 'package:blitz_score/models/card.dart';
 
 class Player {
   int id;

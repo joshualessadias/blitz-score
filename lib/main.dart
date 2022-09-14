@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'score_page.dart';
-import 'package:flutter/services.dart';
+import 'screens/score_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ButtonStyle(
                   backgroundColor:
