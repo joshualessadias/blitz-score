@@ -51,8 +51,10 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
   void _handleSubmitted() {
     FocusScope.of(context).unfocus();
     widget.isEditing
-        ? playerUtils.updatePlayer(widget.index, myController.text, selectedCard)
-        : playerUtils.createPlayer(widget.index, myController.text, selectedCard);
+        ? playerUtils.updatePlayer(
+            widget.index, myController.text, selectedCard)
+        : playerUtils.createPlayer(
+            widget.index, myController.text, selectedCard);
     Navigator.pop(context);
   }
 
@@ -171,10 +173,11 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
                   if (widget.isEditing)
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                          primary: Colors.red,
-                          side: const BorderSide(color: Colors.red),
-                          fixedSize: const Size(100, 45),
-                          textStyle: const TextStyle(fontSize: 16)),
+                        foregroundColor: Colors.red,
+                        side: const BorderSide(color: Colors.red),
+                        fixedSize: const Size(100, 45),
+                        textStyle: const TextStyle(fontSize: 16),
+                      ),
                       onPressed: _handleDeleted,
                       child: const Text('Delete'),
                     ),

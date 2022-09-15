@@ -5,12 +5,14 @@ class Player {
   String name;
   int points;
   MyCard card;
+  int temporaryPoints;
 
   Player(
       {required this.id,
       required this.name,
       required this.points,
-      required this.card});
+      required this.card,
+      this.temporaryPoints = 0});
 }
 
 List<Player> playerList = [];

@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:blitz_score/utilities/player_utils.dart';
+import 'package:blitz_score/widgets/clickable_point.dart';
+import 'package:blitz_score/widgets/my_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:blitz_score/models/player.dart';
 import 'package:flutter/services.dart';
@@ -29,7 +33,7 @@ class ScorePageState extends State<ScorePage> {
   }
 
   @override
-  dispose() {
+  void dispose() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -39,13 +43,17 @@ class ScorePageState extends State<ScorePage> {
     super.dispose();
   }
 
+  void refreshScreen() {
+    setState(() {});
+  }
+
   void _handleLongPress(int index) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) =>
                 PlayerConfigPage(isEditing: true, index: index)));
-    setState(() {});
+    refreshScreen();
   }
 
   Widget _addPlayerButton() {
@@ -58,87 +66,97 @@ class ScorePageState extends State<ScorePage> {
                       isEditing: false,
                       index: playerList.length,
                     )));
-        setState(() {});
+        refreshScreen();
       },
       child: const Icon(Icons.add_rounded),
-      tooltip: 'Add new player',
+      tooltip: "Add new player",
       backgroundColor: Colors.blueGrey,
       foregroundColor: Colors.white,
     );
   }
 
-  Future<int?> showScoreInputDialog(
-      BuildContext context, bool sum, String name) {
-    TextEditingController customController = TextEditingController();
-    return showDialog<int>(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            backgroundColor: const Color(0xff212121),
-            title: sum == true
-                ? Text('Increase "' + name + '" score:')
-                : Text('Decrease "' + name + '" score:'),
-            content: TextField(
-              autofocus: true,
-              controller: customController,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              keyboardType: TextInputType.number,
+  String _formatPoints(int points) {
+    return (points > 0 ? "+" : "") + points.toString();
+  }
+
+  Widget _temporaryPointsWidget(Player player) {
+    return Row(
+      children: [
+        const SizedBox(width: 8),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              fixedSize: const Size(77, 60),
+              backgroundColor: Colors.black26),
+          onPressed: () {
+            playerUtils.persistPoints(player.id);
+            refreshScreen();
+          },
+          child: Text(
+            _formatPoints(player.temporaryPoints),
+            style: const TextStyle(
+              color: Colors.white70,
+              decoration: TextDecoration.none,
+              fontSize: 26,
             ),
-            actions: <Widget>[
-              ElevatedButton(
-                onPressed: () {
-                  customController.text != ''
-                      ? Navigator.of(context)
-                          .pop(int.parse(customController.text))
-                      : Navigator.of(context).pop(int.parse('0'));
-                },
-                child: const Text('Submit'),
-              )
-            ],
-          );
-        });
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _scoreText(Player player) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          player.points.toString(),
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: Colors.white,
+            decoration: TextDecoration.none,
+            fontSize: 100,
+          ),
+        ),
+        player.temporaryPoints == 0
+            ? const SizedBox.shrink()
+            : _temporaryPointsWidget(player)
+      ],
+    );
+  }
+
+  Widget _generateClickablePoint(int index, int value) {
+    return ClickablePoint(
+      amount: value,
+      onTap: () {
+        playerUtils.sumTemporary(index, value);
+        refreshScreen();
+      },
+    );
   }
 
   Widget _scoringButtons(int index) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        OutlinedButton(
-            onPressed: () {
-              showScoreInputDialog(context, true, playerList[index].name)
-                  .then((value) => setState(() {
-                        playerUtils.sumPoints(index, value!);
-                      }));
-            },
-            style: OutlinedButton.styleFrom(
-              primary: Colors.white,
-              side: const BorderSide(color: Colors.black38, width: 1.7),
-              fixedSize: const Size(80, 50),
-              backgroundColor: Colors.black12,
-            ),
-            child: const Icon(
-              Icons.add_rounded,
-              size: 40,
-            )),
-        OutlinedButton(
-            onPressed: () {
-              showScoreInputDialog(context, false, playerList[index].name)
-                  .then((value) => setState(() {
-                        playerUtils.subtractPoints(index, value!);
-                      }));
-            },
-            style: OutlinedButton.styleFrom(
-              primary: Colors.white,
-              side: const BorderSide(color: Colors.black38, width: 1.7),
-              fixedSize: const Size(80, 50),
-              backgroundColor: Colors.black12,
-            ),
-            child: const Icon(
-              Icons.remove_rounded,
-              size: 40,
-            )),
+        Column(
+          children: [
+            _generateClickablePoint(index, -1),
+            const MyDivider(),
+            _generateClickablePoint(index, -5),
+            const MyDivider(),
+            _generateClickablePoint(index, -10),
+          ],
+        ),
+        Column(
+          children: [
+            _generateClickablePoint(index, 1),
+            const MyDivider(),
+            _generateClickablePoint(index, 5),
+            const MyDivider(),
+            _generateClickablePoint(index, 10),
+          ],
+        ),
       ],
     );
   }
@@ -158,48 +176,42 @@ class ScorePageState extends State<ScorePage> {
                 _handleLongPress(index);
               },
               child: Container(
-                  width: playerList.length <= maxWidgets
-                      ? MediaQuery.of(context).size.width / playerList.length
-                      : 225,
-                  color: playerList[index].card.color,
-                  child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 24, 8, 24),
-                      child: Stack(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(0, 65, 0, 0),
-                            width: playerList.length <= maxWidgets
-                                ? MediaQuery.of(context).size.width /
-                                    playerList.length
-                                : 225,
-                            child: playerList[index].card.figure,
+                width: playerList.length <= maxWidgets
+                    ? MediaQuery.of(context).size.width / playerList.length
+                    : 225,
+                color: playerList[index].card.color,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 24, 8, 24),
+                  child: Stack(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(0, 65, 0, 0),
+                        width: playerList.length <= maxWidgets
+                            ? MediaQuery.of(context).size.width /
+                                playerList.length
+                            : 225,
+                        child: playerList[index].card.figure,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            playerList[index].name,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 40,
+                              decoration: TextDecoration.none,
+                            ),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                playerList[index].name,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 40,
-                                  decoration: TextDecoration.none,
-                                ),
-                              ),
-                              Text(
-                                playerList[index].points.toString(),
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  decoration: TextDecoration.none,
-                                  fontSize: 100,
-                                ),
-                              ),
-                              _scoringButtons(index),
-                            ],
-                          ),
+                          _scoreText(playerList[index]),
+                          _scoringButtons(index),
                         ],
-                      ))),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             );
           },
         ),
@@ -214,7 +226,7 @@ class ScorePageState extends State<ScorePage> {
     return Scaffold(
       body: _listView(),
       floatingActionButton: _addPlayerButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
     );
   }
 }

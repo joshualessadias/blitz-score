@@ -17,15 +17,20 @@ class PlayerUtils {
     playerList.removeAt(index);
   }
 
-  void sumPoints(int index, int value) {
-    playerList[index].points += value;
+  void persistPoints(int index) {
+    playerList[index].points += playerList[index].temporaryPoints;
+    playerList[index].temporaryPoints = 0;
   }
 
-  void subtractPoints(int index, int value) {
-    playerList[index].points -= value;
+  void sumTemporary(int index, int value) {
+    var aux = playerList[index].temporaryPoints + value;
+
+    if (aux > 99) {
+      aux = 99;
+    } else if (aux < -99) {
+      aux = -99;
+    }
+
+    playerList[index].temporaryPoints = aux;
   }
 }
-
-
-
-
