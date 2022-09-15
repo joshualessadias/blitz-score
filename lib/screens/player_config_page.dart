@@ -1,6 +1,7 @@
 import 'package:blitz_score/models/card.dart';
 import 'package:blitz_score/models/player.dart';
 import 'package:blitz_score/utilities/player_utils.dart';
+import 'package:blitz_score/widgets/my_card_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -76,18 +77,9 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
                 selectedCard = cardList[firstIndex];
                 setState(() {});
               },
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: selectedCard == cardList[firstIndex]
-                        ? cardList[firstIndex].color
-                        : cardList[firstIndex].color.withOpacity(0.3)),
-                width: double.infinity,
-                child: Icon(
-                  cardList[firstIndex].figure.icon,
-                  size: 200,
-                  color: Colors.black38,
-                ),
+              child: MyCardSelection(
+                selectedCard: selectedCard,
+                index: firstIndex,
               ),
             ),
           ),
@@ -104,18 +96,9 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
                 selectedCard = cardList[secondIndex];
                 setState(() {});
               },
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: selectedCard == cardList[secondIndex]
-                        ? cardList[secondIndex].color
-                        : cardList[secondIndex].color.withOpacity(0.3)),
-                width: double.infinity,
-                child: Icon(
-                  cardList[secondIndex].figure.icon,
-                  size: 200,
-                  color: Colors.black38,
-                ),
+              child: MyCardSelection(
+                selectedCard: selectedCard,
+                index: secondIndex,
               ),
             ),
           ),
@@ -128,6 +111,16 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+              ),
+              color: Colors.lightBlue,
+            ),
+          ),
           title: widget.isEditing
               ? const Text('Edit Player')
               : const Text('Add New Player'),
@@ -135,6 +128,7 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
                   controller: myController,

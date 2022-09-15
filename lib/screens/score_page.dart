@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:blitz_score/utilities/player_utils.dart';
 import 'package:blitz_score/widgets/clickable_point.dart';
 import 'package:blitz_score/widgets/my_divider.dart';
