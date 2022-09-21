@@ -7,10 +7,10 @@ import 'package:flutter/services.dart';
 
 class PlayerConfigPage extends StatefulWidget {
   final bool isEditing;
-  final int index;
+  final Player? player;
 
   const PlayerConfigPage(
-      {Key? key, required this.isEditing, required this.index})
+      {Key? key, required this.isEditing, required this.player})
       : super(key: key);
 
   @override
@@ -32,10 +32,9 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
     ]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
-    selectedCard =
-        widget.isEditing ? playerList[widget.index].card : selectedCard;
+    selectedCard = widget.isEditing ? widget.player!.card : selectedCard;
     myController.text =
-        widget.isEditing ? playerList[widget.index].name : myController.text;
+        widget.isEditing ? widget.player!.name : myController.text;
   }
 
   @override
@@ -51,17 +50,21 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
 
   void _handleSubmitted() {
     FocusScope.of(context).unfocus();
+    var editedPlayer = Player(
+      id: widget.player?.id,
+      name: myController.text,
+      points: widget.player == null ? 0 : widget.player!.points,
+      card: selectedCard,
+    );
     widget.isEditing
-        ? playerUtils.updatePlayer(
-            widget.index, myController.text, selectedCard)
-        : playerUtils.createPlayer(
-            widget.index, myController.text, selectedCard);
+        ? playerUtils.update(editedPlayer)
+        : playerUtils.create(editedPlayer);
     Navigator.pop(context);
   }
 
   void _handleDeleted() {
     FocusScope.of(context).unfocus();
-    playerUtils.deletePlayer(widget.index);
+    playerUtils.delete(widget.player!);
     Navigator.pop(context);
   }
 
