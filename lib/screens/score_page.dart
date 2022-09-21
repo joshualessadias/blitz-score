@@ -8,7 +8,8 @@ import 'package:flutter/services.dart';
 import 'player_config_page.dart';
 
 class ScorePage extends StatefulWidget {
-  const ScorePage({Key? key}) : super(key: key);
+  final bool databaseIsEmpty;
+  const ScorePage({Key? key, required this.databaseIsEmpty}) : super(key: key);
 
   @override
   ScorePageState createState() => ScorePageState();
@@ -210,6 +211,8 @@ class ScorePageState extends State<ScorePage> {
   }
 
   Widget _listView() {
+    var size = MediaQuery.of(context).size;
+
     return FutureBuilder<List<Player>>(
       future: playerUtils.findAll(),
       builder: (BuildContext context, AsyncSnapshot<List<Player>> snapshot) {
@@ -245,13 +248,17 @@ class ScorePageState extends State<ScorePage> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              playerList[index].name,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 40,
-                                decoration: TextDecoration.none,
+                            SizedBox(
+                              height: size.height / 4,
+                              child: Text(
+                                playerList[index].name,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 40,
+                                  decoration: TextDecoration.none,
+                                ),
+                                maxLines: 2,
                               ),
                             ),
                             _scoreText(playerList[index]),
@@ -282,10 +289,13 @@ class ScorePageState extends State<ScorePage> {
     dbMaxWidgets = MediaQuery.of(context).size.width / 225;
     maxWidgets = dbMaxWidgets.floor();
 
-    return Scaffold(
-      body: firstOpening ? _showGameDialog() : _listView(),
-      floatingActionButton: _addPlayerButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
-    );
+    return !widget.databaseIsEmpty && firstOpening
+        ? Scaffold(body: _showGameDialog())
+        : Scaffold(
+            body: _listView(),
+            floatingActionButton: _addPlayerButton(),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniEndTop,
+          );
   }
 }

@@ -1,12 +1,17 @@
+import 'package:blitz_score/utilities/player_utils.dart';
 import 'package:flutter/material.dart';
 import 'screens/score_page.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var playerUtils = PlayerUtils();
+  bool databaseIsEmpty = await playerUtils.isEmpty();
+  runApp(MyApp(databaseIsEmpty: databaseIsEmpty));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool databaseIsEmpty;
+  const MyApp({Key? key, required this.databaseIsEmpty}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -20,7 +25,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const ScorePage(),
+      home: ScorePage(databaseIsEmpty: databaseIsEmpty),
     );
   }
 }

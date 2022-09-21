@@ -19,6 +19,7 @@ class ClickablePoint extends StatelessWidget {
         ),
       ),
       onTap: onTap,
+      enableFeedback: true,
     );
   }
 }

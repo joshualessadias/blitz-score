@@ -8,6 +8,10 @@ class PlayerUtils {
     return await _playerRepository.findAll();
   }
 
+  Future<bool> isEmpty() {
+    return _playerRepository.findAll().then((playerList) => playerList.isEmpty);
+  }
+
   void create(Player player) {
     _playerRepository.insert(player);
   }
