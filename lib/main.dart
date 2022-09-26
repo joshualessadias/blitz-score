@@ -1,6 +1,9 @@
+import 'package:blitz_score/l10n/l10n.dart';
+import 'package:blitz_score/screens/score_page.dart';
 import 'package:blitz_score/utilities/player_utils.dart';
 import 'package:flutter/material.dart';
-import 'screens/score_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +28,13 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      supportedLocales: L10n.all,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       home: ScorePage(databaseIsEmpty: databaseIsEmpty),
     );
   }

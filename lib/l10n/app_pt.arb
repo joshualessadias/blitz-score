@@ -1,0 +1,16 @@
+{
+  "language": "Português",
+  "helloWorld": "Olá, Mundo!",
+  "addNewPlayer": "Adicionar novo jogador",
+  "createLoad": "Criar ou Carregar",
+  "createLoadDescription": "Criar novo placar ou carregar últimos jogadores?",
+  "createNew": "Criar novo",
+  "loadLast": "Carregar últimos",
+  "introduction": "Adicione um novo jogador pressionando o botão +",
+  "editPlayerTitle": "Editar Jogador",
+  "addPlayerTitle": "Adicionar Novo Jogador",
+  "enterPlayersName": "Digite o nome do jogador",
+  "selectPlayersCard": "Selecione a carta do jogador:",
+  "delete": "Deletar",
+  "submit": "Confirmar"
+}

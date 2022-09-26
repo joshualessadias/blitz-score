@@ -4,6 +4,7 @@ import 'package:blitz_score/utilities/player_utils.dart';
 import 'package:blitz_score/widgets/my_card_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PlayerConfigPage extends StatefulWidget {
   final bool isEditing;
@@ -125,8 +126,8 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
             ),
           ),
           title: widget.isEditing
-              ? const Text('Edit Player')
-              : const Text('Add New Player'),
+              ? Text(AppLocalizations.of(context)!.editPlayerTitle)
+              : Text(AppLocalizations.of(context)!.addPlayerTitle),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -135,15 +136,16 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
             children: [
               TextFormField(
                   controller: myController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Enter Player\'s Name')),
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText:
+                          AppLocalizations.of(context)!.enterPlayersName)),
               const SizedBox(
                 height: 16,
               ),
-              const Text(
-                'Select Player\'s Card:',
-                style: TextStyle(fontSize: 24),
+              Text(
+                AppLocalizations.of(context)!.selectPlayersCard,
+                style: const TextStyle(fontSize: 22),
               ),
               const SizedBox(
                 height: 16,
@@ -173,18 +175,18 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
                         foregroundColor: Colors.red,
                         side: const BorderSide(color: Colors.red),
                         fixedSize: const Size(100, 45),
-                        textStyle: const TextStyle(fontSize: 16),
+                        textStyle: const TextStyle(fontSize: 15),
                       ),
                       onPressed: _handleDeleted,
-                      child: const Text('Delete'),
+                      child: Text(AppLocalizations.of(context)!.delete),
                     ),
                   Center(
                       child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         fixedSize: const Size(100, 45),
-                        textStyle: const TextStyle(fontSize: 16)),
+                        textStyle: const TextStyle(fontSize: 15)),
                     onPressed: _handleSubmitted,
-                    child: const Text('Submit'),
+                    child: Text(AppLocalizations.of(context)!.submit),
                   )),
                 ],
               )

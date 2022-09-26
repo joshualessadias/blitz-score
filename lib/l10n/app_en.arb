@@ -1,0 +1,58 @@
+{
+  "language": "English",
+  "@language": {
+    "description": "The current Language"
+  },
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "A programmer greeting"
+  },
+  "addNewPlayer": "Add new player",
+  "@addNewPlayer": {
+    "description": "Tool tip for add button"
+  },
+  "createLoad": "Create or Load",
+  "@createLoad": {
+    "description": "Start up popup title"
+  },
+  "createLoadDescription": "Create new board or load last players?",
+  "@createLoadDescription": {
+    "description": "Start up popup description"
+  },
+  "createNew": "Create new",
+  "@createNew": {
+    "description": "Start up popup create option"
+  },
+  "loadLast": "Load last",
+  "@loadLast": {
+    "description": "Start up popup load option"
+  },
+  "introduction": "Add a new player by tapping the + button",
+  "@introduction": {
+    "description": "Introduction text"
+  },
+  "editPlayerTitle": "Edit Player",
+  "@editPlayerTitle": {
+    "description": "Edit player config screen title"
+  },
+  "addPlayerTitle": "Add New Player",
+  "@addPlayerTitle": {
+    "description": "Add player config screen title"
+  },
+  "enterPlayersName": "Enter player's name",
+  "@enterPlayersName": {
+    "description": "Enter players name text input"
+  },
+  "selectPlayersCard": "Select player's card:",
+  "@selectPlayersCard": {
+    "description": "Select players card"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "delete"
+  },
+  "submit": "Submit",
+  "@submit": {
+    "description": "submit"
+  }
+}

@@ -4,6 +4,7 @@ import 'package:blitz_score/widgets/my_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:blitz_score/models/player.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'player_config_page.dart';
 
@@ -90,7 +91,7 @@ class ScorePageState extends State<ScorePage> {
         );
       },
       child: const Icon(Icons.add_rounded),
-      tooltip: "Add new player",
+      tooltip: AppLocalizations.of(context)!.addNewPlayer,
       backgroundColor: Colors.blueGrey,
       foregroundColor: Colors.white,
     );
@@ -186,13 +187,11 @@ class ScorePageState extends State<ScorePage> {
 
   Widget _showGameDialog() {
     return AlertDialog(
-      title: const Text(
-        'Create/Load',
-      ),
-      content: const Text('Create new board or load last players?'),
+      title: Text(AppLocalizations.of(context)!.createLoad),
+      content: Text(AppLocalizations.of(context)!.createLoadDescription),
       actions: [
         TextButton(
-          child: const Text('Create new'),
+          child: Text(AppLocalizations.of(context)!.createNew),
           onPressed: () {
             playerUtils.clear();
             firstOpening = false;
@@ -200,7 +199,7 @@ class ScorePageState extends State<ScorePage> {
           },
         ),
         TextButton(
-          child: const Text('Load last'),
+          child: Text(AppLocalizations.of(context)!.loadLast),
           onPressed: () {
             firstOpening = false;
             refreshScreen();
@@ -273,10 +272,10 @@ class ScorePageState extends State<ScorePage> {
             },
           );
         } else {
-          return const Center(
+          return Center(
             child: Text(
-              'Add a new player by tapping the + button',
-              style: TextStyle(fontSize: 24),
+              AppLocalizations.of(context)!.introduction,
+              style: const TextStyle(fontSize: 24),
             ),
           );
         }
