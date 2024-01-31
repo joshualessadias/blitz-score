@@ -90,10 +90,10 @@ class ScorePageState extends State<ScorePage> {
           ),
         );
       },
-      child: const Icon(Icons.add_rounded),
       tooltip: AppLocalizations.of(context)!.addNewPlayer,
       backgroundColor: Colors.blueGrey,
       foregroundColor: Colors.white,
+      child: const Icon(Icons.add_rounded),
     );
   }
 
