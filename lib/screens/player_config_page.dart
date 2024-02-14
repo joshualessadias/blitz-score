@@ -115,6 +115,7 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          foregroundColor: Colors.white,
           elevation: 0,
           backgroundColor: Colors.transparent,
           flexibleSpace: Container(
@@ -125,9 +126,11 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
               color: Colors.lightBlue,
             ),
           ),
-          title: widget.isEditing
-              ? Text(AppLocalizations.of(context)!.editPlayerTitle)
-              : Text(AppLocalizations.of(context)!.addPlayerTitle),
+          title: Text(
+            widget.isEditing
+                ? AppLocalizations.of(context)!.editPlayerTitle
+                : AppLocalizations.of(context)!.addPlayerTitle,
+          ),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -167,27 +170,34 @@ class _PlayerConfigPageState extends State<PlayerConfigPage> {
                 height: 16,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   if (widget.isEditing)
-                    OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.red,
-                        side: const BorderSide(color: Colors.red),
-                        fixedSize: const Size(100, 45),
-                        textStyle: const TextStyle(fontSize: 15),
-                      ),
-                      onPressed: _handleDeleted,
-                      child: Text(AppLocalizations.of(context)!.delete),
+                    Row(
+                      children: [
+                        OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Colors.red,
+                            side: const BorderSide(color: Colors.red),
+                            fixedSize: const Size(100, 45),
+                            textStyle: const TextStyle(fontSize: 15),
+                          ),
+                          onPressed: _handleDeleted,
+                          child: Text(AppLocalizations.of(context)!.delete),
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        ),
+                      ],
                     ),
-                  Center(
-                      child: ElevatedButton(
+                  ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
                         fixedSize: const Size(100, 45),
                         textStyle: const TextStyle(fontSize: 15)),
                     onPressed: _handleSubmitted,
                     child: Text(AppLocalizations.of(context)!.submit),
-                  )),
+                  ),
                 ],
               )
             ],
