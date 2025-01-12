@@ -1,10 +1,9 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.blitz_score">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
    <application
         android:label="Blitz Score"
         android:icon="@mipmap/icon">
         <activity
-            android:name=".MainActivity"
+            android:name="com.joshuadias.blitz_score.MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
