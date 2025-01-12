@@ -10,21 +10,27 @@ class ScoringButtons extends StatelessWidget {
   final Player player;
   final Function(int, int) updateTemporaryPoints;
 
-  ScoringButtons(
-      this.player, this.temporaryPoints, this.updateTemporaryPoints,
+  ScoringButtons(this.player, this.temporaryPoints, this.updateTemporaryPoints,
       {Key? key})
       : super(key: key);
 
   final PlayerUtils playerUtils = PlayerUtils();
 
   Widget _generateClickablePoint(Player player, int value) {
-    return ClickablePoint(
-      amount: value,
+    return InkWell(
       onTap: () {
-        int updatedValue = playerUtils.sumTemporary(
-            temporaryPoints[player.id!]!, value);
+        int updatedValue =
+            playerUtils.sumTemporary(temporaryPoints[player.id!]!, value);
         updateTemporaryPoints(player.id!, updatedValue);
       },
+      child: Column(
+        children: [
+          ClickablePoint(
+            amount: value,
+          ),
+          const MyDivider(),
+        ],
+      ),
     );
   }
 
@@ -36,18 +42,14 @@ class ScoringButtons extends StatelessWidget {
         Column(
           children: [
             _generateClickablePoint(player, -1),
-            const MyDivider(),
             _generateClickablePoint(player, -5),
-            const MyDivider(),
             _generateClickablePoint(player, -10),
           ],
         ),
         Column(
           children: [
             _generateClickablePoint(player, 1),
-            const MyDivider(),
             _generateClickablePoint(player, 5),
-            const MyDivider(),
             _generateClickablePoint(player, 10),
           ],
         ),
